@@ -21,16 +21,6 @@ public:
     void set(int addr, int val) override { mem[addr] = val; }
 };
 
-// ---------------- Forward declaration ----------------
-class CPU;
-
-// ---------------- Abstract Command ----------------
-class ICommand {
-public:
-    virtual void execute(CPU& cpu, RAMInterface& ram, map<int, shared_ptr<ICommand>>& RAMmap) = 0;
-    virtual ~ICommand() {}
-};
-
 // ---------------- CPU Class ----------------
 class CPU {
 private:
@@ -58,6 +48,13 @@ public:
             cmd->execute(*this, RAM, RAMmap);
         }
     }
+};
+
+// ---------------- Abstract Command ----------------
+class ICommand {
+public:
+    virtual void execute(CPU& cpu, RAMInterface& ram, map<int, shared_ptr<ICommand>>& RAMmap) = 0;
+    virtual ~ICommand() {}
 };
 
 // ---------------- Concrete Commands ----------------
